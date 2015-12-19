@@ -1,0 +1,46 @@
+using UnityEngine;
+using System.Collections;
+
+public class Audio_Test : MonoBehaviour {
+
+    public AudioSource Source;
+    public AudioClip Note;
+    public float Dampening_Speed;
+
+    bool Fade_Out;
+
+
+	// Use this for initialization
+	void Start () {
+	
+	}
+	
+	// Update is called once per frame
+	void Update () {
+
+        if (Input.GetKeyDown(KeyCode.A))
+        {
+            Fade_Out = false;
+            Source.volume = 1;
+            Source.Play(0);
+        }
+
+        if (Input.GetKeyUp(KeyCode.A))
+        {
+            Fade_Out = true;
+        }
+
+        if (Fade_Out == true)
+        {
+            if (Source.volume >= .1)
+            {
+                Source.volume = Mathf.Lerp(Source.volume, 0, Time.deltaTime * Dampening_Speed);
+            }
+            else
+            {
+                Source.Stop();
+            }
+        }
+
+    }
+}
